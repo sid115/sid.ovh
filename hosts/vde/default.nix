@@ -7,7 +7,7 @@
 {
   imports = [
     ./boot.nix
-    # ./github-runners.nix
+    ./github-runners.nix
     ./hardware.nix
     ./packages.nix
     ./secrets

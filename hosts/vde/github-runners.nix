@@ -1,7 +1,7 @@
 { config, ... }:
 
 let
-  tokenFile = config.sops.secrets."github-runners/portuus".path;
+  tokenFile = config.sops.secrets."github-runners/vde".path;
 in
 {
   services.github-runners = {
