@@ -1,0 +1,8 @@
+{
+  "buildHost": "vde",
+  "hosts": [
+    "sid",
+    "rx4",
+    "vde"
+  ]
+}
