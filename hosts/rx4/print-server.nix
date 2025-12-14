@@ -5,6 +5,5 @@
 
   services.print-server = {
     enable = true;
-    forceSSL = false;
   };
 }

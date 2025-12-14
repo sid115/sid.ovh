@@ -31,13 +31,19 @@
 
   services.headplane = {
     enable = true;
-    subdomain = "hp";
+    reverseProxy = {
+      enable = true;
+      subdomain = "hp";
+    };
   };
 
   services.headscale = {
     enable = true;
     openFirewall = true;
-    subdomain = "hs";
+    reverseProxy = {
+      enable = true;
+      subdomain = "hs";
+    };
   };
 
   services.matrix-synapse = {
@@ -122,7 +128,10 @@
 
   services.uptime-kuma = {
     enable = true;
-    subdomain = "kuma";
+    reverseProxy = {
+      enable = true;
+      subdomain = "kuma";
+    };
   };
 
   services.uptime-kuma-agent = {
