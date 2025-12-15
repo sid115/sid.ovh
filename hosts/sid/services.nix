@@ -22,6 +22,7 @@
     outputs.nixosModules.tailscale
 
     ./maubot.nix
+    # ./smtp-relay.nix # FIXME
   ];
 
   services.baibot = {
@@ -121,10 +122,6 @@
   };
 
   services.openssh.enable = true;
-
-  # services.tailscale.loginServer = lib.mkForce (
-  #   with config.services.headscale; "http://${address}.${toString port}"
-  # );
 
   services.uptime-kuma = {
     enable = true;

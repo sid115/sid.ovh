@@ -7,10 +7,12 @@
 {
   imports = [
     ./boot.nix
-    ./github-runners.nix
     ./hardware.nix
     ./packages.nix
     ./secrets
+
+    # ./github-runners.nix # FIXME
+    # ./mailserver.nix # FIXME
 
     ../../users/sid
 
@@ -22,7 +24,7 @@
   ];
 
   networking.hostName = "vde";
-  networking.domain = "vde.lan";
+  networking.domain = "sid.ovh";
 
   system.stateVersion = "25.11";
 }

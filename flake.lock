@@ -25,16 +25,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1765729909,
-        "narHash": "sha256-ePofPSj0KuXHBSjDt+t0buyBdlD9ejYeEPNXzCnbekg=",
+        "lastModified": 1765800177,
+        "narHash": "sha256-DxrFyK74D7kMjv7dXPzLuVYs24jJMf1aKIura/Fk/hs=",
         "owner": "sid115",
         "repo": "nix-core",
-        "rev": "6c93d3fbb16c7035e1f600ec865b7e7dcacf283e",
+        "rev": "877d70f2222835f0f828443254ff569788858815",
         "type": "github"
       },
       "original": {
         "owner": "sid115",
-        "ref": "develop",
+        "ref": "feature/smtp-relay",
         "repo": "nix-core",
         "type": "github"
       }
