@@ -10,6 +10,7 @@
     ./hardware.nix
     ./packages.nix
     ./secrets
+    ./virtualisation.nix
 
     # ./github-runners.nix # FIXME
     # ./mailserver.nix # FIXME

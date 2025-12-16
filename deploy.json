@@ -1,5 +1,5 @@
 {
-  "buildHost": "localhost",
+  "buildHost": "vde",
   "hosts": [
     "sid",
     "rx4",
