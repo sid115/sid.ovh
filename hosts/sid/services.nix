@@ -104,13 +104,13 @@
             "hydra"
             "import.finance"
             "media"
-            "miniflux"
             "rss-bridge"
             "share"
             "vault"
             "vde"
             "videos"
 
+            # "miniflux" # FIXME: false positive
             # "search" # FIXME: 429
           ];
         in
