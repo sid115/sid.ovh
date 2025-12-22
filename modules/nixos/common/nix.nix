@@ -24,6 +24,8 @@
       # trusted-public-keys = [
       #   "cache.portuus.de:INZRjwImLIbPbIx8Qp38gTVmSNL0PYE4qlkRzQY2IAU="
       # ];
+
+      trusted-users = [ "root" ];
     };
   };
 }

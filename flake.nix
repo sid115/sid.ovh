@@ -9,6 +9,9 @@
     # core.url = "git+file:///home/sid/src/nix-core";
     core.inputs.nixpkgs.follows = "nixpkgs";
 
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -68,13 +71,34 @@
         };
       };
 
+      deploy =
+        let
+          mkNode = name: {
+            hostname = name;
+            profiles.system = {
+              user = "root";
+              path =
+                inputs.deploy-rs.lib.${self.nixosConfigurations.${name}.system}.activate.nixos
+                  self.nixosConfigurations.${name};
+            };
+          };
+        in
+        {
+          nodes = {
+            sid = mkNode "sid";
+            vde = mkNode "vde";
+          };
+        };
+
       checks = forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
           flakePkgs = self.packages.${system};
+          deployChecks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
         in
-        {
+        deployChecks
+        // {
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
