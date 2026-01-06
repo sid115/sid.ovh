@@ -10,9 +10,11 @@
 {
   imports = [
     inputs.core.nixosModules.baibot
+    inputs.core.nixosModules.coturn
     inputs.core.nixosModules.headplane
     inputs.core.nixosModules.headscale
     inputs.core.nixosModules.matrix-synapse
+    inputs.core.nixosModules.maubot
     inputs.core.nixosModules.nginx
     inputs.core.nixosModules.ntfy-sh
     inputs.core.nixosModules.openssh
@@ -21,7 +23,6 @@
 
     outputs.nixosModules.tailscale
 
-    ./maubot.nix
     # ./smtp-relay.nix # FIXME
   ];
 
@@ -47,8 +48,20 @@
     };
   };
 
+  services.coturn = {
+    enable = true;
+    sops = true;
+    openFirewall = true;
+  };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "olm-3.2.16"
+  ];
+
   services.matrix-synapse = {
     enable = true;
+    sops = true;
+    coturn.enable = true;
     bridges = {
       whatsapp = {
         enable = true;
@@ -61,8 +74,22 @@
     };
   };
 
+  services.maubot = {
+    enable = true;
+    sops = true;
+    admins = [
+      "sid"
+    ];
+    plugins = with config.services.maubot.package.plugins; [
+      github
+      reminder
+    ];
+  };
+
   services.nginx = {
     enable = true;
+    openFirewall = true;
+    forceSSL = true;
     virtualHosts."ai.sid.ovh" = {
       enableACME = true;
       forceSSL = true;
@@ -101,13 +128,11 @@
             "dav"
             "finance"
             "git"
-            "hydra"
             "import.finance"
             "media"
             "rss-bridge"
             "share"
             "vault"
-            "vde"
             "videos"
 
             # "miniflux" # FIXME: false positive

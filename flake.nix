@@ -5,9 +5,15 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
-    core.url = "github:sid115/nix-core/develop";
+    core = {
+      type = "gitlab";
+      owner = "sid";
+      repo = "nix-core";
+      host = "git.portuus.de";
+      ref = "feature/matrix-overhaul";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # core.url = "git+file:///home/sid/src/nix-core";
-    core.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +45,29 @@
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
+      overlays = [ inputs.core.overlays.default ];
+
+      mkNixosConfiguration =
+        system: modules:
+        nixpkgs.lib.nixosSystem {
+          inherit system modules;
+          specialArgs = {
+            inherit inputs outputs;
+            lib =
+              (import nixpkgs {
+                inherit system overlays;
+              }).lib;
+          };
+        };
+
+      mkNode = name: system: {
+        hostname = name;
+        profiles.system = {
+          user = "root";
+          path = inputs.deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${name};
+        };
+      };
     in
     {
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
@@ -48,47 +77,18 @@
       nixosModules = import ./modules/nixos;
 
       nixosConfigurations = {
-        sid = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [ ./hosts/sid ];
-        };
-        rx4 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [ ./hosts/rx4 ];
-        };
-        vde = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [ ./hosts/vde ];
-        };
+        rx4 = mkNixosConfiguration "x86_64-linux" [ ./hosts/rx4 ];
+        sid = mkNixosConfiguration "x86_64-linux" [ ./hosts/sid ];
+        vde = mkNixosConfiguration "x86_64-linux" [ ./hosts/vde ];
       };
 
-      deploy =
-        let
-          mkNode = name: {
-            hostname = name;
-            profiles.system = {
-              user = "root";
-              path =
-                inputs.deploy-rs.lib.${self.nixosConfigurations.${name}.system}.activate.nixos
-                  self.nixosConfigurations.${name};
-            };
-          };
-        in
-        {
-          nodes = {
-            sid = mkNode "sid";
-            vde = mkNode "vde";
-          };
+      deploy = {
+        nodes = {
+          rx4 = mkNode "rx4" "x86_64-linux";
+          sid = mkNode "sid" "x86_64-linux";
+          vde = mkNode "vde" "x86_64-linux";
         };
+      };
 
       checks = forAllSystems (
         system:
