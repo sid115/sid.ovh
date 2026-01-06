@@ -25,17 +25,17 @@
       },
       "locked": {
         "host": "git.portuus.de",
-        "lastModified": 1767723655,
+        "lastModified": 1767724573,
         "narHash": "sha256-q2sTglrYS5wK54+QZcudqgsFdGgIYvJU/wfEULdPRDM=",
         "owner": "sid",
         "repo": "nix-core",
-        "rev": "f387d3e8707f21b068047f1b2e76c43dae8bd1e1",
+        "rev": "2d9cf5226f82f9a1242dcc6ba30aa752b798e145",
         "type": "gitlab"
       },
       "original": {
         "host": "git.portuus.de",
         "owner": "sid",
-        "ref": "feature/matrix-overhaul",
+        "ref": "master",
         "repo": "nix-core",
         "type": "gitlab"
       }

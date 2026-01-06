@@ -10,7 +10,7 @@
       owner = "sid";
       repo = "nix-core";
       host = "git.portuus.de";
-      ref = "feature/matrix-overhaul";
+      ref = "master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # core.url = "git+file:///home/sid/src/nix-core";
