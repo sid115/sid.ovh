@@ -8,7 +8,7 @@
   imports = [
     ./boot.nix
     ./hardware.nix
-    ./monero.nix
+   # ./monero.nix
     ./packages.nix
     ./secrets
 
