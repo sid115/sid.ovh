@@ -7,8 +7,9 @@
 {
   imports = [
     ./boot.nix
+    ./gnome.nix
     ./hardware.nix
-   # ./monero.nix
+    ./networking.nix
     ./packages.nix
     ./secrets
 
