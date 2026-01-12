@@ -8,12 +8,10 @@
   imports = [
     ./boot.nix
     ./hardware.nix
+    # ./monero.nix
     ./packages.nix
     ./secrets
     ./virtualisation.nix
-
-    # ./github-runners.nix # FIXME
-    # ./mailserver.nix # FIXME
 
     ../../users/sid
 
@@ -25,7 +23,7 @@
   ];
 
   networking.hostName = "vde";
-  networking.domain = "sid.ovh";
+  networking.domain = "vde.lan";
 
   system.stateVersion = "25.11";
 }

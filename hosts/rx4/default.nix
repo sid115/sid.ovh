@@ -22,9 +22,6 @@
     outputs.nixosModules.tailscale
   ];
 
-  networking.hostName = "rx4";
-  networking.domain = "rx4.lan";
-
   services = {
     openssh.enable = true;
     transmission.enable = true;

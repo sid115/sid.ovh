@@ -1,4 +1,7 @@
 {
+  networking.hostName = "rx4";
+  networking.domain = "rx4.lan";
+
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = 1;
     "net.ipv6.conf.all.forwarding" = 1;
