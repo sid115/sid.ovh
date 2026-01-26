@@ -12,6 +12,7 @@
     ./networking.nix
     ./packages.nix
     ./secrets
+    ./services.nix
 
     ../../users/sid
 
@@ -21,11 +22,6 @@
     outputs.nixosModules.common
     outputs.nixosModules.tailscale
   ];
-
-  services = {
-    openssh.enable = true;
-    transmission.enable = true;
-  };
 
   system.stateVersion = "25.11";
 }

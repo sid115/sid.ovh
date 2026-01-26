@@ -4,5 +4,5 @@
 }:
 
 {
-  aldi-talk-true-unlimited = pkgs.callPackage ./aldi-talk-true-unlimited { };
+  alditalk-true-unlimited = pkgs.callPackage ./alditalk-true-unlimited { };
 }

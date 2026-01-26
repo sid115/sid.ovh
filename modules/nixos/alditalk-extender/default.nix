@@ -21,7 +21,7 @@ in
   options.services.alditalk-extender = {
     enable = mkEnableOption "AldiTalk True Unlimited Extender service";
 
-    package = mkPackageOption pkgs "local.alditalk-true-unlimited";
+    package = mkPackageOption pkgs "alditalk-true-unlimited" { };
 
     user = mkOption {
       type = types.str;
