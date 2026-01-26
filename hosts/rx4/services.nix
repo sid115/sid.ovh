@@ -13,7 +13,7 @@
   ];
 
   services.alditalk-extender = {
-    enable = true;
+    # enable = true;
     package = pkgs.local.alditalk-true-unlimited;
     envFile = config.sops.templates.alditalk-extender.path;
   };

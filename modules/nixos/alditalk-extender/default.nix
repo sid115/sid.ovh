@@ -23,18 +23,6 @@ in
 
     package = mkPackageOption pkgs "alditalk-true-unlimited" { };
 
-    user = mkOption {
-      type = types.str;
-      default = "alditalk";
-      description = "User account under which the service runs.";
-    };
-
-    group = mkOption {
-      type = types.str;
-      default = "alditalk";
-      description = "Group under which the service runs.";
-    };
-
     envFile = mkOption {
       type = types.path;
       example = "/run/architect/alditalk.env";
@@ -48,16 +36,17 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users = mkIf (cfg.user == "alditalk") {
-      alditalk = {
-        isSystemUser = true;
-        group = cfg.group;
-        description = "AldiTalk Extender Service User";
+    users = {
+      users = {
+        alditalk = {
+          isSystemUser = true;
+          group = "alditalk";
+          home = "/var/lib/alditalk";
+          createHome = true;
+          description = "AldiTalk Extender Service User";
+        };
       };
-    };
-
-    users.groups = mkIf (cfg.group == "alditalk") {
-      alditalk = { };
+      groups.alditalk = { };
     };
 
     systemd.services.alditalk-extender = {
@@ -68,15 +57,18 @@ in
       serviceConfig = {
         ExecStart = getExe cfg.package;
         EnvironmentFile = cfg.envFile;
+        Environment = "HOME=/var/lib/alditalk";
 
         Restart = "always";
         RestartSec = "30s";
-        User = cfg.user;
-        Group = cfg.group;
+        User = "alditalk";
+        Group = "alditalk";
+        WorkingDirectory = "/var/lib/alditalk";
 
+        RuntimeDirectory = "alditalk";
         ProtectSystem = "full";
-        NoNewPrivileges = true;
         PrivateTmp = true;
+        NoNewPrivileges = false;
       };
     };
   };
