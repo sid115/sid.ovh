@@ -9,9 +9,9 @@
     ./boot.nix
     # ./gnome.nix
     ./hardware.nix
-    # ./networking.nix
+    ./networking.nix
     ./packages.nix
-    # ./secrets
+    ./secrets
 
     ../../users/sid
 
@@ -19,7 +19,7 @@
     inputs.core.nixosModules.openssh
 
     outputs.nixosModules.common
-    # outputs.nixosModules.tailscale
+    outputs.nixosModules.tailscale
   ];
 
   services = {
