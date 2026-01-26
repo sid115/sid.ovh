@@ -7,11 +7,11 @@
 {
   imports = [
     ./boot.nix
-    ./gnome.nix
+    # ./gnome.nix
     ./hardware.nix
-    ./networking.nix
+    # ./networking.nix
     ./packages.nix
-    ./secrets
+    # ./secrets
 
     ../../users/sid
 
