@@ -9,14 +9,14 @@
 {
   imports = [
     inputs.core.nixosModules.print-server
-    outputs.nixosModules.alditalk-extender
+    # outputs.nixosModules.alditalk-extender
   ];
 
-  services.alditalk-extender = {
-    # enable = true;
-    package = pkgs.local.alditalk-true-unlimited;
-    envFile = config.sops.templates.alditalk-extender.path;
-  };
+  # services.alditalk-extender = {
+  #   enable = true;
+  #   package = pkgs.local.alditalk-true-unlimited;
+  #   envFile = config.sops.templates.alditalk-extender.path;
+  # };
 
   services.openssh.enable = true;
 
