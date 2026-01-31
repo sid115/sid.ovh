@@ -21,6 +21,11 @@
     #       proxyWebsockets = true;
     #     };
     #   };
+    virtualHosts."netdata.sid.tail" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:19999";
+      };
+    };
     # FIXME
     #   virtualHosts."print.sid.ovh" = {
     #     enableACME = true;
