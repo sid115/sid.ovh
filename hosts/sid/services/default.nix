@@ -11,10 +11,9 @@
     outputs.nixosModules.tailscale
 
     ./headscale.nix
+    # ./mailserver.nix
     ./matrix-synapse.nix
     ./netdata.nix
     ./nginx.nix
-
-    # ./smtp-relay.nix # FIXME
   ];
 }

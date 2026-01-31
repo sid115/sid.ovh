@@ -15,6 +15,7 @@
     ../../users/sid
 
     inputs.core.nixosModules.common
+    inputs.core.nixosModules.device.server
 
     outputs.nixosModules.common
   ];
