@@ -16,10 +16,7 @@
     inputs.core.nixosModules.matrix-synapse
     inputs.core.nixosModules.maubot
     inputs.core.nixosModules.nginx
-    inputs.core.nixosModules.ntfy-sh
     inputs.core.nixosModules.openssh
-    inputs.core.nixosModules.uptime-kuma
-    inputs.core.nixosModules.uptime-kuma-agent
 
     outputs.nixosModules.tailscale
 
@@ -86,6 +83,21 @@
     ];
   };
 
+  services.netdata = {
+    enable = true;
+    package = pkgs.netdata.override {
+      withCloudUi = true;
+    };
+    config.global = {
+      "debug log" = "syslog";
+      "access log" = "syslog";
+      "error log" = "syslog";
+    };
+    configDir = {
+      "stream.conf" = config.sops.templates."netdata/stream.conf".path;
+    };
+  };
+
   services.nginx = {
     enable = true;
     openFirewall = true;
@@ -115,62 +127,5 @@
     };
   };
 
-  services.ntfy-sh = {
-    enable = true;
-    reverseProxy.enable = true;
-    settings.base-url = "https://ntfy.sid.ovh";
-    notifiers = {
-      monitor-domains =
-        let
-          subdomains = [
-            "ai"
-            "cloud"
-            "dav"
-            "finance"
-            "git"
-            "import.finance"
-            "media"
-            "rss-bridge"
-            "share"
-            "vault"
-            "videos"
-
-            # "miniflux" # FIXME: false positive
-            # "search" # FIXME: 429
-          ];
-        in
-        map (subdomain: {
-          fqdn = subdomain + ".portuus.de";
-          topic = "portuus";
-        }) subdomains;
-    };
-  };
-
   services.openssh.enable = true;
-
-  services.uptime-kuma = {
-    enable = true;
-    reverseProxy = {
-      enable = true;
-      subdomain = "kuma";
-    };
-  };
-
-  services.uptime-kuma-agent = {
-    enable = true;
-    monitors = {
-      nginx = {
-        secretFile = config.sops.secrets."uptime-kuma-agent/nginx".path;
-      };
-      matrix-synapse = {
-        secretFile = config.sops.secrets."uptime-kuma-agent/matrix-synapse".path;
-      };
-      mautrix-whatsapp = {
-        secretFile = config.sops.secrets."uptime-kuma-agent/mautrix-whatsapp".path;
-      };
-      mautrix-signal = {
-        secretFile = config.sops.secrets."uptime-kuma-agent/mautrix-signal".path;
-      };
-    };
-  };
 }
