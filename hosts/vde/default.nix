@@ -8,18 +8,16 @@
   imports = [
     ./boot.nix
     ./hardware.nix
-    # ./monero.nix
     ./packages.nix
     ./secrets
+    ./services
     ./virtualisation.nix
 
     ../../users/sid
 
     inputs.core.nixosModules.common
-    inputs.core.nixosModules.openssh
 
     outputs.nixosModules.common
-    outputs.nixosModules.tailscale
   ];
 
   networking.hostName = "vde";

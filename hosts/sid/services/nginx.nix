@@ -1,0 +1,42 @@
+{
+  inputs,
+  ...
+}:
+
+{
+  imports = [
+    inputs.core.nixosModules.nginx
+  ];
+
+  services.nginx = {
+    enable = true;
+    openFirewall = true;
+    forceSSL = true;
+    # FIXME
+    #   virtualHosts."ai.sid.ovh" = {
+    #     enableACME = true;
+    #     forceSSL = true;
+    #     locations."/" = {
+    #       proxyPass = "http://100.64.0.5:8080";
+    #       proxyWebsockets = true;
+    #     };
+    #   };
+    # FIXME
+    #   virtualHosts."print.sid.ovh" = {
+    #     enableACME = true;
+    #     forceSSL = true;
+    #     locations."/" = {
+    #       proxyPass = "http://100.64.0.5:631";
+    #       proxyWebsockets = true;
+    #     };
+    #   };
+    # FIXME
+    #   virtualHosts."rss.sid.ovh" = {
+    #     enableACME = true;
+    #     forceSSL = true;
+    #     locations."/" = {
+    #       proxyPass = "http://100.64.0.5:8085";
+    #     };
+    #   };
+  };
+}

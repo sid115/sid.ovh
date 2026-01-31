@@ -78,13 +78,27 @@
         vde = mkNixosConfiguration "x86_64-linux" [ ./hosts/vde ];
       };
 
+      # FIXME
       deploy = {
         nodes = {
-          rx4 = mkNode "rx4" "x86_64-linux";
-          sid = mkNode "sid" "x86_64-linux";
-          vde = mkNode "vde" "x86_64-linux";
+          #     rx4 = mkNode "rx4" "x86_64-linux";
+          #     sid = mkNode "sid" "x86_64-linux";
+          #     vde = mkNode "vde" "x86_64-linux";
         };
       };
+
+      formatter = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          config = self.checks.${system}.pre-commit-check.config;
+          inherit (config) package configFile;
+          script = ''
+            ${pkgs.lib.getExe package} run --all-files --config ${configFile}
+          '';
+        in
+        pkgs.writeShellScriptBin "pre-commit-run" script
+      );
 
       checks = forAllSystems (
         system:
@@ -92,16 +106,22 @@
           pkgs = nixpkgs.legacyPackages.${system};
           flakePkgs = self.packages.${system};
           deployChecks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
+          overlaidPkgs = import nixpkgs {
+            inherit system;
+            overlays = [ self.overlays.modifications ];
+          };
         in
         deployChecks
         // {
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
             src = ./.;
             hooks = {
-              nixfmt-rfc-style.enable = true;
+              nixfmt.enable = true;
             };
           };
           build-packages = pkgs.linkFarm "flake-packages-${system}" flakePkgs;
+          build-overlays = pkgs.linkFarm "flake-overlays-${system}" {
+          };
         }
       );
     };

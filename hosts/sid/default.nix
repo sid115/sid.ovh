@@ -10,7 +10,7 @@
     ./hardware.nix
     ./packages.nix
     ./secrets
-    ./services.nix
+    ./services
 
     ../../users/sid
 
