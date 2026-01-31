@@ -11,7 +11,7 @@
     outputs.nixosModules.tailscale
 
     ./headscale.nix
-    # ./mailserver.nix
+    ./mailserver.nix
     ./matrix-synapse.nix
     ./netdata.nix
     ./nginx.nix
