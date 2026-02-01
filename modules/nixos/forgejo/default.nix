@@ -8,7 +8,12 @@ let
   cfg = config.services.forgejo;
 
   inherit (cfg) settings;
-  inherit (lib) head mkDefault mkIf;
+  inherit (lib)
+    getExe
+    head
+    mkDefault
+    mkIf
+    ;
 in
 {
   config = mkIf cfg.enable {
@@ -18,8 +23,8 @@ in
       settings = {
         server = {
           DOMAIN = "git.${config.networking.domain}";
-          PROTOCOL = "https";
-          ROOT_URL = with settings.server; "${PROTOCOL}://${DOMAIN}/";
+          PROTOCOL = "http";
+          ROOT_URL = "https://${settings.server.DOMAIN}/";
           HTTP_ADDR = "0.0.0.0";
           HTTP_PORT = 3456;
           SSH_PORT = head config.services.openssh.ports;
@@ -40,6 +45,10 @@ in
       secrets = {
         mailer.PASSWD = mkIf settings.mailer.ENABLED config.sops.secrets."forgejo/mail-pw".path;
       };
+    };
+
+    environment.shellAliases = {
+      forgejo = "sudo -u ${cfg.user} ${getExe cfg.package} --config ${cfg.stateDir}/custom/conf/app.ini";
     };
 
     sops.secrets."forgejo/mail-pw" = mkIf settings.mailer.ENABLED {

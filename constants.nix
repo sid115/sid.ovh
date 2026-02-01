@@ -14,7 +14,7 @@ rec {
       port = 3456;
     };
     netdata = {
-      fqdn = "netdata." + domain;
+      fqdn = "netdata.sid.tail";
       port = 19999;
     };
     open-webui-oci = {
