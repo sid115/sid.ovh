@@ -20,6 +20,14 @@
         proxyWebsockets = true;
       };
     };
+    virtualHosts."git.sid.ovh" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://100.64.0.10:3456";
+        proxyWebsockets = true;
+      };
+    };
     virtualHosts."netdata.sid.tail" = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:19999";
