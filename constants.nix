@@ -10,15 +10,15 @@ rec {
   };
   services = {
     forgejo = {
-      fqdn = "git" + domain;
+      fqdn = "git." + domain;
       port = 3456;
     };
     netdata = {
-      fqdn = "netdata" + domain;
+      fqdn = "netdata." + domain;
       port = 19999;
     };
     open-webui-oci = {
-      fqdn = "ai" + domain;
+      fqdn = "ai." + domain;
       port = 8083;
     };
   };
