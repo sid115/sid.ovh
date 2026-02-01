@@ -1,5 +1,6 @@
 {
   config,
+  constants,
   ...
 }:
 
@@ -45,7 +46,7 @@
         content = ''
           [stream]
           enabled = yes
-          destination = 100.64.0.6:19999
+          destination = ${constants.hosts.sid.ip}:${builtins.toString constants.services.netdata.port}
           api key = ${config.sops.placeholder."netdata/stream/rx4/uuid"}
         '';
       };

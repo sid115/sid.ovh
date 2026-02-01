@@ -1,11 +1,16 @@
-{ inputs, config, ... }:
+{
+  inputs,
+  constants,
+  config,
+  ...
+}:
 
 {
   imports = [ inputs.core.nixosModules.open-webui-oci ];
 
   services.open-webui-oci = {
     enable = true;
-    externalUrl = "ai.sid.ovh";
+    externalUrl = "https://" + constants.services.open-webui-oci.fqdn;
     port = 8083;
     # environmentFile = config.sops.templates."open-webui-oci/environment".path;
     # environment = {

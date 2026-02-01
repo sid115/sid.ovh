@@ -55,6 +55,7 @@
           inherit system modules;
           specialArgs = {
             inherit inputs outputs lib;
+            constants = import ./constants.nix;
           };
         };
 

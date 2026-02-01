@@ -1,8 +1,15 @@
 {
   inputs,
+  constants,
+  lib,
   ...
 }:
 
+let
+  ssl = true;
+
+  inherit (lib.utils) mkVirtualHost;
+in
 {
   imports = [
     inputs.core.nixosModules.nginx
@@ -11,27 +18,20 @@
   services.nginx = {
     enable = true;
     openFirewall = true;
-    forceSSL = true;
-    virtualHosts."ai.sid.ovh" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://100.64.0.10:8083";
-        proxyWebsockets = true;
-      };
+    forceSSL = ssl;
+    virtualHosts."${constants.services.open-webui-oci.fqdn}" = mkVirtualHost {
+      inherit ssl;
+      address = constants.hosts.rx4.ip;
+      port = constants.services.open-webui-oci.port;
     };
-    virtualHosts."git.sid.ovh" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://100.64.0.10:3456";
-        proxyWebsockets = true;
-      };
+    virtualHosts."${constants.services.forgejo.fqdn}" = mkVirtualHost {
+      inherit ssl;
+      address = constants.hosts.rx4.ip;
+      port = constants.services.forgejo.port;
     };
-    virtualHosts."netdata.sid.tail" = {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:19999";
-      };
+    virtualHosts."${constants.services.netdata.fqdn}" = mkVirtualHost {
+      ssl = false;
+      port = constants.services.netdata.port;
     };
     # FIXME
     #   virtualHosts."print.sid.ovh" = {
