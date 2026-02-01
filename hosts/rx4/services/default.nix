@@ -11,6 +11,7 @@
     outputs.nixosModules.tailscale
 
     ./netdata.nix
+    ./open-webui-oci.nix
     ./print-server.nix
 
     # ./alditalk-extender.nix # FIXME

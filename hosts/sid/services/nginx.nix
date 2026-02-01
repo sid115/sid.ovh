@@ -12,15 +12,14 @@
     enable = true;
     openFirewall = true;
     forceSSL = true;
-    # FIXME
-    #   virtualHosts."ai.sid.ovh" = {
-    #     enableACME = true;
-    #     forceSSL = true;
-    #     locations."/" = {
-    #       proxyPass = "http://100.64.0.5:8080";
-    #       proxyWebsockets = true;
-    #     };
-    #   };
+    virtualHosts."ai.sid.ovh" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://100.64.0.10:8083";
+        proxyWebsockets = true;
+      };
+    };
     virtualHosts."netdata.sid.tail" = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:19999";
