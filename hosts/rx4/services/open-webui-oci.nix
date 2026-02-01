@@ -5,6 +5,7 @@
 
   services.open-webui-oci = {
     enable = true;
+    externalUrl = "ai.sid.ovh";
     port = 8083;
     # environmentFile = config.sops.templates."open-webui-oci/environment".path;
     # environment = {

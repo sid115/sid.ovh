@@ -1,6 +1,6 @@
 {
   networking.hostName = "rx4";
-  networking.domain = "rx4.lan";
+  networking.domain = "sid.ovh";
 
   # boot.kernel.sysctl = {
   #   "net.ipv4.conf.all.forwarding" = 1;
