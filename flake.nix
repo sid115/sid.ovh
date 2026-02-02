@@ -6,15 +6,9 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-old-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    core = {
-      type = "gitlab";
-      owner = "sid";
-      repo = "nix-core";
-      host = "git.portuus.de";
-      ref = "release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # url = "git+file:///home/sid/src/nix-core";
-    };
+    core.url = "git+https://git.portuus.de/sid/nix-core.git?ref=release-25.11";
+    # core.url = "git+file:///home/sid/src/nix-core";
+    core.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";

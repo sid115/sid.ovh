@@ -15,5 +15,6 @@
     ./matrix-synapse.nix
     ./netdata.nix
     ./nginx.nix
+    ./radicale.nix
   ];
 }
