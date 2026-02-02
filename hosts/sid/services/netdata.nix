@@ -4,8 +4,10 @@
   ...
 }:
 
+let
+  email = "sid@${config.networking.domain}";
+in
 {
-  # TODO: notifications via mail
   services.netdata = {
     enable = true;
     package = pkgs.netdata.override {
@@ -18,7 +20,20 @@
     };
     configDir = {
       "stream.conf" = config.sops.templates."netdata/stream.conf".path;
+      "health_alarm_notify.conf" = pkgs.writeText "health_alarm_notify.conf" ''
+        SEND_EMAIL="YES"
+        sendmail="/run/wrappers/bin/sendmail"
+        EMAIL_SENDER="netdata@${config.networking.domain}"
+        DEFAULT_RECIPIENT_EMAIL="${email}"
+        role_recipients_email[sysadmin]="${email}"
+        role_recipients_email[domainadmin]="${email}"
+        role_recipients_email[root]="${email}"
+      '';
     };
+  };
+
+  systemd.services.netdata.environment = {
+    NETDATA_USER_CONFIG_DIR = "/etc/netdata/conf.d";
   };
 
   sops =
