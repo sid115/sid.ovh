@@ -37,14 +37,13 @@ in
       address = constants.hosts.rx4.ip;
       port = constants.services.open-webui-oci.port;
     };
-    # FIXME
-    # virtualHosts."${constants.services.rss-bridge.fqdn}" = {
-    #   enableACME = ssl;
-    #   forceSSL = ssl;
-    #   locations."/" = {
-    #     proxyPass = "http://${constants.hosts.rx4.ip}";
-    #   };
-    # };
+    virtualHosts."${constants.services.rss-bridge.fqdn}" = {
+      enableACME = ssl;
+      forceSSL = ssl;
+      locations."/" = {
+        proxyPass = "http://${constants.hosts.rx4.ip}";
+      };
+    };
     # FIXME
     # virtualHosts."print.sid.ovh" = {
     #   enableACME = true;
