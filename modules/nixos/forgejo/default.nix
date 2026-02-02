@@ -30,10 +30,10 @@ in
           SSH_PORT = head config.services.openssh.ports;
         };
         service = {
-          DISABLE_REGISTRATION = false;
+          DISABLE_REGISTRATION = true;
         };
         actions = {
-          ENABLED = mkDefault false;
+          ENABLED = true;
         };
         mailer = {
           ENABLED = mkDefault false;
