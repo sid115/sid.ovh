@@ -7,6 +7,7 @@
 {
   imports = [
     inputs.core.nixosModules.openssh
+    inputs.clients.nixosModules.syncthing
 
     outputs.nixosModules.tailscale
 
@@ -20,6 +21,10 @@
 
     # ./alditalk-extender.nix # FIXME
   ];
+
+  # bootstrap
+  # services.syncthing.enable = true;
+  # services.syncthing.guiAddress = "0.0.0.0:8384";
 
   services.transmission.enable = true;
 }

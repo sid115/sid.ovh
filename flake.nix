@@ -10,6 +10,9 @@
     # core.url = "git+file:///home/sid/src/nix-core";
     core.inputs.nixpkgs.follows = "nixpkgs";
 
+    clients.url = "github:sid115/nix-config/stable";
+    clients.inputs.nixpkgs.follows = "nixpkgs";
+
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
